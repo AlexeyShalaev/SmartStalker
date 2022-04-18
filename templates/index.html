@@ -1,0 +1,283 @@
+<!doctype html>
+<html lang="ru">
+
+  <head>
+    <meta charset="utf-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1">
+    <meta name="description" content="">
+    <meta name="author" content="Mark Otto, Jacob Thornton, and Bootstrap contributors">
+    <meta name="generator" content="Hugo 0.84.0">
+    <title>SmartStalker</title>
+    <link href="/static/css/styles.css" rel="stylesheet">
+    <link rel="canonical" href="https://getbootstrap.com/docs/5.0/examples/checkout/">
+    <link href="https://cdn.jsdelivr.net/npm/bootstrap@5.0.1/dist/css/bootstrap.min.css" rel="stylesheet" integrity="sha384-+0n0xVW2eSR5OomGNYDnhzAbDsOXxcvSN1TPprVMTNDbiYZCxYbOOl7+AMvyTG2x" crossorigin="anonymous">
+      <!-- Bootstrap core CSS -->
+    <link href="/docs/5.0/dist/css/bootstrap.min.css" rel="stylesheet" integrity="sha384-EVSTQN3/azprG1Anm3QDgpJLIm9Nao0Yz1ztcQTwFspd3yD65VohhpuuCOmLASjC" crossorigin="anonymous">
+    <!-- Favicons -->
+    <link rel="apple-touch-icon" href="/docs/5.0/assets/img/favicons/apple-touch-icon.png" sizes="180x180">
+    <link rel="icon" href="/docs/5.0/assets/img/favicons/favicon-32x32.png" sizes="32x32" type="image/png">
+    <link rel="icon" href="/docs/5.0/assets/img/favicons/favicon-16x16.png" sizes="16x16" type="image/png">
+    <link rel="manifest" href="/docs/5.0/assets/img/favicons/manifest.json">
+    <link rel="mask-icon" href="/docs/5.0/assets/img/favicons/safari-pinned-tab.svg" color="#7952b3">
+    <link rel="icon" href="/docs/5.0/assets/img/favicons/favicon.ico">
+    <meta name="theme-color" content="#7952b3">
+    <style>
+      .bd-placeholder-img {
+        font-size: 1.125rem;
+        text-anchor: middle;
+        -webkit-user-select: none;
+        -moz-user-select: none;
+        user-select: none;
+      }
+
+      @media (min-width: 768px) {
+        .bd-placeholder-img-lg {
+          font-size: 3.5rem;
+        }
+      }
+    </style>
+    <!-- Custom styles for this template -->
+    <link href="form-validation.css" rel="stylesheet">
+    {{ toastr.include_jquery() }}
+    {{ toastr.include_toastr_css() }}
+    {{ toastr.message() }}
+  </head>
+
+  <body>
+    <form method="POST">
+          <div class="container">
+            <div class="row">
+              <div class="py-5 text-center">
+                  <img alt-name="ГБОУ Школа № 1537" src="//lyc1537.mskobr.ru/images/cms/thumbs/1f1204c38f5d7f50f0ab6bcf597ef97666ee60e8/1597364622_new_1_png_250_135.png">
+                    <h2 style="margin-top: 10px;">Smart Stalker</h2>
+                    <p class="lead">Веб-приложение построит для вас лучший маршрут и поможет избежать опасностей</p>
+              </div>
+              <div class="col-12">
+                <img src="/static/images/map.png" id="map" class="img-fluid" alt="Карта">
+              </div>
+              <div class="col-12" style="margin-top: 15px;">
+                <div class="card shadow">
+                  <h5 class="card-header">Карта</h5>
+                  <div class="card-body">
+                    <div class="row">
+                      <div class="col">
+                        <div class="row">
+                              <div class="col-sm-2">
+                                <h5 style="width: 100px;" class="card-title">Откуда</h5>
+                              </div>
+                              <div class="col-sm-2">
+                                <input style="width: 100px;" type="text" class="form-control text-center" id="a_x" placeholder="X">
+                              </div>
+                              <div class="col">
+                                 <input style="width: 100px;" type="text" class="form-control text-center" id="a_y" placeholder="Y">
+                              </div>
+                           </div>
+                      </div>
+                      <div class="col">
+                        <div class="row">
+                              <div class="col-sm-2">
+                                <h5 style="width: 100px;" class="card-title">Куда</h5>
+                              </div>
+                              <div class="col-sm-2">
+                                <input style="width: 100px;" type="text" class="form-control text-center" id="b_x" placeholder="X">
+                              </div>
+                              <div class="col">
+                                 <input style="width: 100px;" type="text" class="form-control text-center" id="b_y" placeholder="Y">
+                              </div>
+                           </div>
+                      </div>
+                    </div>
+                    <div class="row">
+                      <div class="col-6">
+                        <div class="d-grid gap-2">
+                          <br>
+                          <button class="btn btn-primary" type="button" onclick="create_road()">Построить маршрут</button>
+                        </div>
+                      </div>
+                      <div class="col-6">
+                        <div class="d-grid gap-2">
+                        <br>
+                        <button class="btn btn-primary" type="button" onclick="update_map()">Обновить карту</button>
+                        </div>
+                      </div>
+                    </div>
+                    </div>
+                  </div>
+                </div>
+              <div class="col-12" style="margin-top: 15px;">
+                 <div class="card shadow">
+                   <h5 class="card-header">Добавление детектора</h5>
+                    <div class="card-body">
+                        <form method="POST">
+                          <div class="row">
+                            <div class="col">
+                              <label>Координаты</label>
+                                <input type="text" placeholder="X;Y" class="form-control"  id="coords" required>
+                            </div>
+                            <div class="col">
+                              <label>Показания</label>
+                                <input type="text" placeholder="id1:rate1;id2:rate2;id3:rate3" class="form-control"  id="pokaz" required>
+                            </div>
+                              <div class="d-grid gap-2">
+                                  <br>
+                                <button class="btn btn-primary" type="button" onclick="add_detector()">Добавить</button>
+                                </div>
+                          </div>
+                        </form>
+                        <div class="d-grid gap-2">
+                                  <br>
+                                <button class="btn btn-primary" type="button" onclick="get_json()">Обновить детекторы</button>
+                                </div>
+                        </div>
+                </div>
+               </div>
+              <div class="col-12" style="margin-top: 15px;">
+                <div class="card shadow">
+                      <h5 class="card-header">Детекторы</h5>
+                      <div class="card-body">
+                          <div class="table-responsive">
+                              <div id="dataTable_wrapper" class="dataTables_wrapper dt-bootstrap4">
+                                  <div class="row">
+                                      <div class="col-sm-12">
+                                          <table class="table table-bordered dataTable" id="dataTable" width="100%" cellspacing="0" role="grid" aria-describedby="dataTable_info" style="width: 100%;">
+                                              <thead>
+                                                  <tr>
+                                                    <th scope="col">#</th>
+                                                    <th scope="col">Координаты (x,y)</th>
+                                                    <th scope="col">Показания</th>
+                                                      <th>Действия</th>
+                                                  </tr>
+                                              </thead>
+                                              <tbody>
+                                              {% for i in data %}
+                                                  <tr>
+                                                      <td>
+                                                          <a>{{i[0]}}</a>
+                                                      </td>
+                                                      <td>
+                                                          <a>{{i[1]}}</a>
+                                                      </td>
+                                                      <td>
+                                                          <a>{{i[2]}}</a>
+                                                      </td>
+                                                      <td>
+                                                        <a href="/delete_detector/{{i[0]}}" class="btn btn-primary">Удалить</a>
+                                                      </td>
+
+                                                  </tr>
+                                              {% endfor %}
+                                              </tbody>
+                                          </table>
+                                      </div>
+                                  </div>
+                              </div>
+                          </div>
+                      </div>
+                  </div>
+              </div>
+              </div>
+            </div>
+      </form>
+    <footer class="my-5 pt-5 text-muted text-center text-small">
+        <p class="mb-1">© 2022 Лицей 1537 №1</p>
+      </footer>
+    <script src="/docs/5.0/dist/js/bootstrap.bundle.min.js" integrity="sha384-MrcW6ZMFYlzcLA8Nl+NtUVF0sA7MsXsP1UyJoMp4YLEuNSfAP+JcXn/tWtIaxVXM" crossorigin="anonymous"></script>
+    <script src="form-validation.js"></script>
+    <script src="https://cdn.jsdelivr.net/npm/@popperjs/core@2.9.2/dist/umd/popper.min.js" integrity="sha384-IQsoLXl5PILFhosVNubq5LC7Qb9DXgDA9i+tQ8Zj3iwWAwPtgFTxbJ8NT4GN1R8p" crossorigin="anonymous"></script>
+    <script src="https://cdn.jsdelivr.net/npm/bootstrap@5.0.1/dist/js/bootstrap.min.js" integrity="sha384-Atwg2Pkwv9vp0ygtn1JAojH0nYbwNJLPhwyoVbhoPwBhjQPR5VtM2+xf0Uwh9KtT" crossorigin="anonymous"></script>
+    <script>
+        function get_json() {
+             $.ajax({
+                    type: "POST",
+                    url: '/get_json',
+                    success: function () {
+                       document.location.reload();
+                    }
+                });
+
+        }
+        function add_detector() {
+            var pokaz_val = document.getElementById("pokaz").value;
+            var coords_val = document.getElementById("coords").value;
+             $.ajax({
+                    type: "POST",
+                    url: '/add_detector',
+                    data: {
+                        'pokaz': pokaz_val,
+                        'coords': coords_val
+                    },
+                    success: function () {
+                       document.location.reload();
+                    }
+                });
+
+        }
+        function create_road() {
+            var a_x = document.getElementById("a_x").value;
+            var a_y = document.getElementById("a_y").value;
+            var b_x = document.getElementById("b_x").value;
+            var b_y = document.getElementById("b_y").value;
+            if(a_x.length<=0 ||a_y.length<=0 ||b_x.length<=0 ||b_y.length<=0){
+                alert("Введите координаты");
+               return;
+            }
+            try {
+               a_x = parseInt(a_x);
+               a_y = parseInt(a_y);
+               b_x = parseInt(b_x);
+               b_y = parseInt(b_y);
+               if(a_x<0 || a_x>39){
+                   alert("Координата X точки отправления должна быть от 0 до 39");
+                   return;
+               }
+               if(a_y<0 || a_y>29){
+                   alert("Координата Y точки отправления должна быть от 0 до 29");
+                   return;
+               }
+               if(b_x<0 || b_x>39){
+                   alert("Координата X точки назначения должна быть от 0 до 39");
+                   return;
+               }
+               if(b_y<0 || b_y>29){
+                   alert("Координата Y точки назначения должна быть от 0 до 29");
+                   return;
+               }
+            }
+            catch{
+              alert("Ошибка");
+              return;
+            }
+             $.ajax({
+                    type: "POST",
+                    url: '/create_road',
+                    data: {
+                        'a_x': a_x,
+                        'a_y': a_y,
+                        'b_x': b_x,
+                        'b_y': b_y
+                    },
+                    success: function () {
+                        console.log("road");
+                        document.getElementById("map").src="/static/images/output_road.png";
+                    }
+                });
+
+        }
+        function update_map() {
+            $.ajax({
+                    type: "POST",
+                    url: '/update_map',
+                    success: function () {
+                        console.log("output");
+                        document.getElementById("map").src="/static/images/output.png";
+                    }
+                });
+
+        }
+        $( document ).ready(function() {
+            document.getElementById("map").src="/static/images/output.png";
+        });
+    </script>
+  </body>
+
+</html>
